@@ -1,6 +1,8 @@
 var canvas = null;
 var ctx = null;
 
+var drawables = [];
+
 function init()
 {
     canvas = document.getElementById('canvas');
@@ -11,21 +13,7 @@ function init()
     }
 }
 
-function clearCanvas()
-{
-    var width = ctx.canvas.width;
-    var height = ctx.canvas.height;
-    
-    // Clear canvas
-    ctx.clearRect( 0, 0, width, height );
-    /*ctx.fillStyle = '#000000';
-    ctx.fillRect( 0, 0, width, height );*/
-}
-
-function redraw()
-{
-	clearCanvas();
-    
+function createObjects(){
     var width = ctx.canvas.width;
     var height = ctx.canvas.height;
 
@@ -42,17 +30,62 @@ function redraw()
         fillStyle: '#FF0000'
     };
 
+    drawables = [];
+
     for( var row = 0; row < rows; row++ ){
+
+        var red = Math.floor(row * (255 / (rows - 1)));
+
         for( var col = 0; col < columns; col++ ){
-            rectParams.x = col * (rectWidth + spacing);
-            rectParams.y = row * (rectHeight + spacing);
-            var red = Math.floor(row * (255 / (rows - 1)));
+
+            var rect = new Rect( col * (rectWidth + spacing),
+                                 row * (rectHeight + spacing),
+                                 rectWidth,
+                                 rectHeight );
+
+            var aDrawable = new Drawable( rect );
+
+            
             var blue = Math.floor(col * (255 / (columns - 1)));
-            rectParams.fillStyle = 'rgb(' + red + ',255,' + blue + ')';
-            pathLessFillRect( ctx, rectParams );
+            aDrawable.fillStyle = 'rgb(' + red + ',255,' + blue + ')';
+
+            drawables.push(aDrawable);
         }
     }
+}
+
+function clearObjects()
+{
+    drawables = [];
+}
+
+function redraw()
+{
+	var width = ctx.canvas.width;
+    var height = ctx.canvas.height;
     
+    // Clear canvas
+    ctx.clearRect( 0, 0, width, height );
+    
+    drawables.forEach( (drawable) => { drawable.draw(ctx); } );
+
+}
+
+var wiggleTimerID = null;
+function toggleWiggle()
+{
+    if( !wiggleTimerID ){
+        wiggleTimerID = setInterval( () => {
+            var dX = -2.0 + Math.round( Math.random() * 4.0 );
+            var dY = -2.0 + Math.round( Math.random() * 4.0 );
+            drawables.forEach( (d) => { d.rect.top += dY; d.rect.left += dX; } );
+            redraw();
+        }, 50 );
+    }
+    else{
+        clearInterval( wiggleTimerID );
+        wiggleTimerID = null;
+    }
 }
 
 /**
