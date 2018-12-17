@@ -1,13 +1,47 @@
+'use strict';
+
 class Drawable {
     /**
      * 
      * @param {Rect} rect 
      */
     constructor( rect ){
-        this.rect = rect;
-        this.fillStyle = '#FFFFFFFF';
-        this.strokeStyle = '#OOOOOOFF'
-        this.lineWidth = 1;
+        this._rect = rect;
+        this._fillStyle = '#FFFFFFFF';
+        this._strokeStyle = '#OOOOOOFF'
+        this._lineWidth = 1;
+    }
+
+    set rect( r ){
+        this._rect = r;
+    }
+
+    get rect(){
+        return this._rect;
+    }
+
+    set fillStyle( fillStyle ){
+        this._fillStyle = fillStyle;
+    }
+
+    get fillStyle(){
+        return this._fillStyle;
+    }
+
+    set strokeStyle( strokeStyle ){
+        this._strokeStyle = strokeStyle;
+    }
+
+    get strokeStyle(){
+        return this._strokeStyle;
+    }
+
+    set lineWidth( lineWidth ){
+        this.lineWidth = lineWidth;
+    }
+
+    get lineWidth(){
+        return this._lineWidth;
     }
 
     /**

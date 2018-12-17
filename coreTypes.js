@@ -1,3 +1,5 @@
+'use strict';
+
 class Point {
 
     /**
@@ -6,8 +8,18 @@ class Point {
      * @param {Number} y 
      */
     constructor( x, y ){
-        this.x = x;
-        this.y = y;
+        this._x = x;
+        this._y = y;
+
+        Object.freeze(this);
+    }
+
+    get x(){
+        return this.x;
+    }
+
+    get y(){
+        return this.y;
     }
 
     /**
@@ -54,34 +66,44 @@ class Rect {
      * @param {Number} height 
      */
     constructor( left, top, width, height ){
-        this.left = left;
-        this.top = top;
-        this.width = width;
-        this.height = height;
+        this._left = left;
+        this._top = top;
+        this._width = width;
+        this._height = height;
+
+        Object.freeze(this);
+    }
+
+    get left(){
+        return this._left;
     }
 
     get minX(){
-        return this.left;
+        return this._left;
     }
 
     get midX(){
-        return this.left + this.width / 2.0;
+        return this._left + this._width / 2.0;
     }
 
     get maxX(){
-        return this.left + this.width;
+        return this._left + this._width;
+    }
+
+    get top(){
+        return this._top;
     }
 
     get minY(){
-        return this.top;
+        return this._top;
     }
 
     get midY(){
-        return this.top + this.height / 2.0;
+        return this._top + this._height / 2.0;
     }
 
     get maxY(){
-        return this.top + this.height;
+        return this._top + this._height;
     }
 
     get topLeft(){
@@ -104,6 +126,14 @@ class Rect {
         return new Point( this.midX, this.midY );
     }
 
+    get width(){
+        return this._width;
+    }
+
+    get height(){
+        return this._height;
+    }
+
     /**
      * Get an inset copy of this
      * @param {Number} inset The inset to apply to all edges
@@ -114,6 +144,16 @@ class Rect {
                          this.top + inset,
                          this.width - 2.0 * inset,
                          this.height - 2.0 * inset );
+    }
+
+    /**
+     * Creates a rectangle with the same dimensions but moved by the given amount
+     * along the X and Y axis.
+     * @param {Number} dX delta X
+     * @param {Number} dY delta Y
+     */
+    moveBy( dX, dY ){
+        return new Rect( this.left + dX, this.top + dY, this.width, this.height );
     }
 
     /**

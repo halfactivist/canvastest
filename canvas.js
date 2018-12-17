@@ -1,3 +1,5 @@
+'use strict';
+
 var canvas = null;
 
 var drawables = [];
@@ -79,8 +81,7 @@ function toggleWiggle()
 
             //var prevBB = drawable.boundingRect;
             cdm.updateRect( drawable.boundingRect );
-            drawable.rect.top += dY;
-            drawable.rect.left += dX;
+            drawable.rect = drawable.rect.moveBy( dX, dY );
             cdm.updateRect( drawable.boundingRect );
 
             //drawables.forEach( (d) => { d.rect.top += dY; d.rect.left += dX; } );
@@ -92,6 +93,43 @@ function toggleWiggle()
         wiggleTimerID = null;
     }
 }
+
+var _followMouseState = false;
+function toggleFollowMouse()
+{
+    if( !_followMouseState ){
+        _followMouseState = true;
+        canvas.addEventListener( 'mousemove', followMouseEventHandler, false );
+    }
+    else{
+        _followMouseState = false;
+        canvas.removeEventListener( 'mousemove', followMouseEventHandler );
+    }
+
+}
+
+function followMouseEventHandler( evt ){
+    var mousePos = getMousePos(canvas, evt);
+    var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+
+    var idx = drawables.length / 2;
+    var drawable = drawables[idx];
+
+    cdm.updateRect( drawable.boundingRect );
+    drawable.rect = new Rect( mousePos.x, mousePos.y, drawable.rect.width, drawable.rect.height );
+    cdm.updateRect( drawable.boundingRect );
+}
+
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+    };
+}
+
+
+
 
 /**
  * @ctx: Canvas context

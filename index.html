@@ -1,20 +1,24 @@
-<head>
-    <title>Hello, Canvas</title>
-    <style>
-        #canvas {
-            border: 1px dotted black
-        }
-    </style>
-    <script src="./canvas.js"></script>
-    <script src="./coreTypes.js"></script>
-    <script src="./drawable.js"></script>
-    <script src="./canvasDrawableManager.js"></script>
-</head>
-<body onload="init();">
-    <button type='button' onclick='redraw();'>Redraw</button>
-    <button type='button' onclick='createObjects();'>Create Objects</button>
-    <button type='button' onclick='clearObjects();'>Clear Objects</button>
-    <button type='button' onclick='toggleWiggle();'>Wiggle</button>
-    <br/>
-    <canvas id='canvas' width='640' height='480'></canvas>
-</body>
+<meta charset="UTF-8"> 
+<html>
+    <head>
+        <title>Hello, Canvas</title>
+        <style>
+            #canvas {
+                border: 1px dotted black
+            }
+        </style>
+        <script src="./canvas.js"></script>
+        <script src="./coreTypes.js"></script>
+        <script src="./drawable.js"></script>
+        <script src="./canvasDrawableManager.js"></script>
+    </head>
+    <body onload="init();">
+        <button type='button' onclick='redraw();'>Redraw</button>
+        <button type='button' onclick='createObjects();'>Create Objects</button>
+        <button type='button' onclick='clearObjects();'>Clear Objects</button>
+        <button type='button' onclick='toggleWiggle();'>Wiggle</button>
+        <button type='button' onclick='toggleFollowMouse();'>Follow Mouse</button>
+        <br/>
+        <canvas id='canvas' width='640' height='480'></canvas>
+    </body>
+</html>
