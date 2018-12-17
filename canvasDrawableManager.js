@@ -9,6 +9,9 @@ class CanvasDrawableManager {
 
 		// Get canvas context from element
 		this._canvasContext = canvasElement.getContext( '2d' );
+		if( !this._canvasContext ){
+			throw "Canvas not supported."
+		}
 
 		// The array that will store the managed objects
 		this._objectArray = [];
@@ -37,7 +40,8 @@ class CanvasDrawableManager {
 		if( this._objectSet.has( obj ) ){
 			return;
 		}
-		this._objects.push( obj );
+		this._objectSet.add( obj );
+		this._objectArray.push( obj );
 		this.updateRect( obj.boundingRect );
 	}
 
@@ -81,12 +85,25 @@ class CanvasDrawableManager {
 	 * @param {DOMHighResTimeStamp}
 	 */
 	_redraw( time ){
+
+		console.log( "_redraw(): updateRect = " + this._updateRect );
+
 		// Clear animation frame request ID, thereby marking that the update is in progress
 		this._animationFrameReqID = 0;
 		var currentUpdateRect = this._updateRect;
 		this._updateRect = null;
 
 		var _this = this;
+
+		this.ctx.clearRect( currentUpdateRect.left, 
+			currentUpdateRect.top,
+			currentUpdateRect.width,
+			currentUpdateRect.height );
+
+		this.ctx.fillStyle = "#FF0000";
+		this.ctx.fillRect( currentUpdateRect.left, currentUpdateRect.top, currentUpdateRect.width, currentUpdateRect.height );
+
+		
 
 		this._objectArray.forEach( (aDrawable, index) => {
 			if( aDrawable.boundingRect.intersects(currentUpdateRect) ){

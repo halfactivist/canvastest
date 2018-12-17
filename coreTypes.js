@@ -220,6 +220,14 @@ class Rect {
         return new Rect( this.left, this.top, this.width, this.height );
     }
 
+    toString(){
+        return "{ "
+            + "left: " + this.left
+            + ", top: " + this.top
+            + ", width: " + this.width
+            + ", height: " + this.height
+            + " }"; 
+    }
     /**
      * Creates a new Rect whose origin and size are 0
      * @returns {Rect} Zero Rect

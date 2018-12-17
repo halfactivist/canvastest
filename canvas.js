@@ -1,24 +1,21 @@
 var canvas = null;
-var ctx = null;
 
 var drawables = [];
+
+var cdm = null;
 
 function init()
 {
     canvas = document.getElementById('canvas');
-    ctx = canvas.getContext('2d', { alpha: false } );
-    if( !ctx ){
-        console.error( 'Canvas unsupported.' );
-        return;
-    }
+    cdm = new CanvasDrawableManager( canvas );
 }
 
 function createObjects(){
-    var width = ctx.canvas.width;
-    var height = ctx.canvas.height;
+    var width = canvas.width;
+    var height = canvas.height;
 
-    var rectWidth = 8;
-    var rectHeight = 8;
+    var rectWidth = 40;
+    var rectHeight = 40;
     var spacing = 4;
 
     var columns = Math.floor(width / (rectWidth + spacing));
@@ -50,25 +47,23 @@ function createObjects(){
             aDrawable.fillStyle = 'rgb(' + red + ',255,' + blue + ')';
 
             drawables.push(aDrawable);
+            cdm.addObject( aDrawable );
         }
     }
 }
 
 function clearObjects()
 {
+    drawables.forEach( (drawable) => { cdm.removeObject(drawable); } );
     drawables = [];
 }
 
 function redraw()
 {
-	var width = ctx.canvas.width;
-    var height = ctx.canvas.height;
+	var width = cdm.ctx.canvas.width;
+    var height = cdm.ctx.canvas.height;
     
-    // Clear canvas
-    ctx.clearRect( 0, 0, width, height );
-    
-    drawables.forEach( (drawable) => { drawable.draw(ctx); } );
-
+    cdm.updateRect( new Rect( 0, 0, width, height ) );
 }
 
 var wiggleTimerID = null;
@@ -78,8 +73,18 @@ function toggleWiggle()
         wiggleTimerID = setInterval( () => {
             var dX = -2.0 + Math.round( Math.random() * 4.0 );
             var dY = -2.0 + Math.round( Math.random() * 4.0 );
-            drawables.forEach( (d) => { d.rect.top += dY; d.rect.left += dX; } );
-            redraw();
+
+            var idx = drawables.length / 2;
+            var drawable = drawables[idx];
+
+            //var prevBB = drawable.boundingRect;
+            cdm.updateRect( drawable.boundingRect );
+            drawable.rect.top += dY;
+            drawable.rect.left += dX;
+            cdm.updateRect( drawable.boundingRect );
+
+            //drawables.forEach( (d) => { d.rect.top += dY; d.rect.left += dX; } );
+            //redraw();
         }, 50 );
     }
     else{
