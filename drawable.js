@@ -11,6 +11,9 @@ class Drawable {
         this._strokeStyle = '#OOOOOOFF'
         this._lineWidth = 1;
         this._drawableManager = null;
+
+        this._updateRect = null;
+        this._updateOpCount = 0;
     }
 
     /**
@@ -28,11 +31,11 @@ class Drawable {
     }
 
     set rect( r ){
-        // Previous rect
-        if( this._drawableManager ){ this._drawableManager.updateRect( this.boundingRect ); }
+        this.startUpdate();
+        
         this._rect = r;
-        // New rect
-        if( this._drawableManager ){ this._drawableManager.updateRect( this.boundingRect ); }
+        
+        this.commitUpdate();
     }
 
     get rect(){
@@ -40,8 +43,12 @@ class Drawable {
     }
 
     set fillStyle( fillStyle ){
+
+        this.startUpdate();
+
         this._fillStyle = fillStyle;
-        if( this._drawableManager ){ this._drawableManager.updateRect( this.boundingRect ); }
+        
+        this.commitUpdate();
     }
 
     get fillStyle(){
@@ -49,8 +56,12 @@ class Drawable {
     }
 
     set strokeStyle( strokeStyle ){
+
+        this.startUpdate();
+
         this._strokeStyle = strokeStyle;
-        if( this._drawableManager ){ this._drawableManager.updateRect( this.boundingRect ); }
+        
+        this.commitUpdate();
     }
 
     get strokeStyle(){
@@ -58,8 +69,12 @@ class Drawable {
     }
 
     set lineWidth( lineWidth ){
+
+        this.startUpdate();
+
         this.lineWidth = lineWidth;
-        if( this._drawableManager ){ this._drawableManager.updateRect( this.boundingRect ); }
+        
+        this.commitUpdate();
     }
 
     get lineWidth(){
@@ -78,6 +93,30 @@ class Drawable {
         // The stroke middle is placed right on the path. Therefore it spills equally on both
         // sides of the path, hence the size increase.
         return this.rect.insetBy( -this.lineWidth );
+    }
+
+    /**
+     * Marks the start of a set of operation requiring update
+     * Actually, only marks the current BB for update
+     */
+    startUpdate()
+    {
+        if( this._updateOpCount === 0 && this._drawableManager ){
+            this._drawableManager.updateRect( this.boundingRect );
+        }
+        this._updateOpCount++;
+    }
+
+    /**
+     * Marks the end of a set of operation requiring update
+     * Actually, only marks the current BB for update
+     */
+    commitUpdate()
+    {
+        this._updateOpCount = this._updateOpCount > 0 ? this._updateOpCount - 1 : 0;
+        if( this._updateOpCount === 0 && this._drawableManager ){
+            this._drawableManager.updateRect( this.boundingRect );
+        }
     }
 
     /**

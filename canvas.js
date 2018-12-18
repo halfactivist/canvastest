@@ -79,13 +79,9 @@ function toggleWiggle()
             var idx = drawables.length / 2;
             var drawable = drawables[idx];
 
-            //var prevBB = drawable.boundingRect;
-            //cdm.updateRect( drawable.boundingRect );
-            drawable.rect = drawable.rect.moveBy( dX, dY );
-            //cdm.updateRect( drawable.boundingRect );
 
-            //drawables.forEach( (d) => { d.rect.top += dY; d.rect.left += dX; } );
-            //redraw();
+            drawable.rect = drawable.rect.moveBy( dX, dY );
+
         }, 50 );
     }
     else{
