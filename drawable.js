@@ -10,10 +10,29 @@ class Drawable {
         this._fillStyle = '#FFFFFFFF';
         this._strokeStyle = '#OOOOOOFF'
         this._lineWidth = 1;
+        this._drawableManager = null;
+    }
+
+    /**
+     * @param {CanvasDrawableManager} cdm
+     */
+    set drawableManager( cdm ){
+        this._drawableManager = cdm;
+    }
+
+    /**
+     * @returns {CanvasDrawableManager}
+     */
+    get drawableManager() {
+        return this._drawableManager;
     }
 
     set rect( r ){
+        // Previous rect
+        if( this._drawableManager ){ this._drawableManager.updateRect( this.boundingRect ); }
         this._rect = r;
+        // New rect
+        if( this._drawableManager ){ this._drawableManager.updateRect( this.boundingRect ); }
     }
 
     get rect(){
@@ -22,6 +41,7 @@ class Drawable {
 
     set fillStyle( fillStyle ){
         this._fillStyle = fillStyle;
+        if( this._drawableManager ){ this._drawableManager.updateRect( this.boundingRect ); }
     }
 
     get fillStyle(){
@@ -30,6 +50,7 @@ class Drawable {
 
     set strokeStyle( strokeStyle ){
         this._strokeStyle = strokeStyle;
+        if( this._drawableManager ){ this._drawableManager.updateRect( this.boundingRect ); }
     }
 
     get strokeStyle(){
@@ -38,6 +59,7 @@ class Drawable {
 
     set lineWidth( lineWidth ){
         this.lineWidth = lineWidth;
+        if( this._drawableManager ){ this._drawableManager.updateRect( this.boundingRect ); }
     }
 
     get lineWidth(){

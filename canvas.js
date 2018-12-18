@@ -80,9 +80,9 @@ function toggleWiggle()
             var drawable = drawables[idx];
 
             //var prevBB = drawable.boundingRect;
-            cdm.updateRect( drawable.boundingRect );
+            //cdm.updateRect( drawable.boundingRect );
             drawable.rect = drawable.rect.moveBy( dX, dY );
-            cdm.updateRect( drawable.boundingRect );
+            //cdm.updateRect( drawable.boundingRect );
 
             //drawables.forEach( (d) => { d.rect.top += dY; d.rect.left += dX; } );
             //redraw();
@@ -115,9 +115,9 @@ function followMouseEventHandler( evt ){
     var idx = drawables.length / 2;
     var drawable = drawables[idx];
 
-    cdm.updateRect( drawable.boundingRect );
+    //cdm.updateRect( drawable.boundingRect );
     drawable.rect = new Rect( mousePos.x, mousePos.y, drawable.rect.width, drawable.rect.height );
-    cdm.updateRect( drawable.boundingRect );
+    //cdm.updateRect( drawable.boundingRect );
 }
 
 function getMousePos(canvas, evt) {

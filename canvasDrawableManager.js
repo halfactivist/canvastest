@@ -42,6 +42,7 @@ class CanvasDrawableManager {
 		if( this._objectSet.has( obj ) ){
 			return;
 		}
+		obj.drawableManager = this;
 		this._objectSet.add( obj );
 		this._objectArray.push( obj );
 		this.updateRect( obj.boundingRect );
@@ -62,6 +63,7 @@ class CanvasDrawableManager {
 			return;
 		}
 		this._objectArray.splice( idx, 1 );
+		obj.drawableManager = null;
 		this.updateRect( obj.boundingRect );
 	}
 
