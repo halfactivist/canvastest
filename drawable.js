@@ -96,6 +96,16 @@ class Drawable {
     }
 
     /**
+     * Test whether the object is hit by this point
+     * The default implementation only tests the bounding rect
+     * @param {Point} point 
+     * @returns {Boolean} true if hit, false otherwise
+     */
+    hitTest( point ){
+        return this.boundingRect.containsPoint( point );
+    }
+
+    /**
      * Marks the start of a set of operation requiring update
      * Actually, only marks the current BB for update
      */

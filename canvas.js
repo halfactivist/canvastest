@@ -10,6 +10,8 @@ function init()
 {
     canvas = document.getElementById('canvas');
     cdm = new CanvasDrawableManager( canvas );
+
+    canvas.addEventListener( 'mousedown', onMouseDownHandler, false );
 }
 
 function createObjects(){
@@ -116,16 +118,32 @@ function followMouseEventHandler( evt ){
     //cdm.updateRect( drawable.boundingRect );
 }
 
+function onMouseDownHandler( evt ){
+    var mousePos = getMousePos(canvas, evt);
+    var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+
+    var drawable = cdm.hitObjectAtPoint( mousePos );
+    console.log( "Hit object: " + drawable );
+    drawable.fillStyle = "#FFFFFF";
+}
+
 function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
-    return {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top
-    };
+    return new Point( evt.clientX - rect.left, evt.clientY - rect.top );
 }
 
 
+function sendToBack(){
+    var idx = drawables.length / 2;
+    var drawable = drawables[idx];
+    cdm.sendObjectToBack( drawable );
+}
 
+function bringToFront(){
+    var idx = drawables.length / 2;
+    var drawable = drawables[idx];
+    cdm.bringObjectToFront( drawable );
+}
 
 /**
  * @ctx: Canvas context

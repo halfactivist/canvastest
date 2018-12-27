@@ -15,11 +15,11 @@ class Point {
     }
 
     get x(){
-        return this.x;
+        return this._x;
     }
 
     get y(){
-        return this.y;
+        return this._y;
     }
 
     /**
@@ -162,7 +162,7 @@ class Rect {
      * @param {Number} y 
      * @returns {Boolean}
      */
-    containsPoint( x, y ){
+    containsPointXY( x, y ){
         return (x >= this.minX && x < this.maxX && y >= this.minY && y < this.maxY) ? true : false;        
     }
 
@@ -171,7 +171,7 @@ class Rect {
      * @param {Point} p 
      */
     containsPoint( p ){
-        return this.containsPoint( p.x, p.y );
+        return this.containsPointXY( p.x, p.y );
     }
 
     /**
