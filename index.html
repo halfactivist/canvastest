@@ -12,7 +12,7 @@
         <script src="./drawable.js"></script>
         <script src="./canvasDrawableManager.js"></script>
     </head>
-    <body onload="init();">
+    <body onload="init();" style="background-color: #000000">
         <button type='button' onclick='redraw();'>Redraw</button>
         <button type='button' onclick='createObjects();'>Create Objects</button>
         <button type='button' onclick='clearObjects();'>Clear Objects</button>
@@ -20,7 +20,9 @@
         <button type='button' onclick='toggleFollowMouse();'>Follow Mouse</button>
         <button type='button' onclick='sendToBack();'>Send to back</button>
         <button type='button' onclick='bringToFront();'>Bring to front</button>
+        <button type='button' onclick='randomColors();'>Random colors</button>
+        <button type='button' onclick='randomInset();'>Random inset</button>
         <br/>
-        <canvas id='canvas' width='640' height='480'></canvas>
+        <canvas id='canvas' width='1280' height='1024'></canvas>
     </body>
 </html>

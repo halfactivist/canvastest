@@ -1,0 +1,22 @@
+{
+  "name": "canvastest",
+  "version": "1.0.0",
+  "description": "Testing canvas",
+  "main": "canvas.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/halfactivist/canvastest.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/halfactivist/canvastest/issues"
+  },
+  "homepage": "https://github.com/halfactivist/canvastest#readme",
+  "devDependencies": {
+    "eslint": "^6.4.0"
+  }
+}

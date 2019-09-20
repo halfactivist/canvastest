@@ -175,7 +175,7 @@ class CanvasDrawableManager {
 			currentUpdateRect.width,
 			currentUpdateRect.height );
 
-		this.ctx.fillStyle = "#FF0000";
+		this.ctx.fillStyle = "#000000";
 		this.ctx.fillRect( currentUpdateRect.left, currentUpdateRect.top, currentUpdateRect.width, currentUpdateRect.height );
 
 		

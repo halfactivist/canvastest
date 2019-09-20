@@ -28,7 +28,7 @@ function createObjects(){
     // Set fill color & fillRect
     var rectParams = {
         x: 0, y: 0, width: rectWidth, height: rectHeight,
-        fillStyle: '#FF0000'
+        fillStyle: '#000000'
     };
 
     drawables = [];
@@ -49,6 +49,7 @@ function createObjects(){
             
             var blue = Math.floor(col * (255 / (columns - 1)));
             aDrawable.fillStyle = 'rgb(' + red + ',255,' + blue + ')';
+            aDrawable.strokeStyle = `rgb(${255 - red},0,${255-blue})`;
 
             drawables.push(aDrawable);
             cdm.addObject( aDrawable );
@@ -89,6 +90,45 @@ function toggleWiggle()
     else{
         clearInterval( wiggleTimerID );
         wiggleTimerID = null;
+    }
+}
+
+var randomColorsTimerID = null;
+function randomColors()
+{
+    if( !randomColorsTimerID ){
+        randomColorsTimerID = setInterval( () => {
+            var idx = Math.round( Math.random() * drawables.length );
+            var drawable = drawables[idx];
+
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+
+            drawable.fillStyle = `rgb(${r},${g},${b})`;
+
+        }, 10 );
+    }
+    else{
+        clearInterval( randomColorsTimerID );
+        randomColorsTimerID = null;
+    }
+}
+
+var randomInsetTimerID = null;
+function randomInset()
+{
+    if( !randomInsetTimerID ){
+        randomInsetTimerID = setInterval( () => {
+            var idx = Math.round( Math.random() * drawables.length );
+            var drawable = drawables[idx];
+            drawable.rect = drawable.rect.insetBy( (Math.random() * 4.0) - 2.0 );
+
+        }, 10 );
+    }
+    else{
+        clearInterval( randomInsetTimerID );
+        randomInsetTimerID = null;
     }
 }
 
