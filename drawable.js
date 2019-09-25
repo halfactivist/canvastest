@@ -41,6 +41,9 @@ export default class Drawable {
         this.commitUpdate();
     }
 
+    /**
+     * @returns {Rect}
+     */
     get rect(){
         return this._rect;
     }
@@ -144,17 +147,24 @@ export default class Drawable {
             return;
         }
 
+        ctx.save();
+
         ctx.lineWidth = this.lineWidth;
         
+        ctx.beginPath();
+        ctx.rect( this.rect.left, this.rect.top, this.rect.width, this.rect.height );
+
         // Fill
         if( this.fillStyle ){
             ctx.fillStyle = this.fillStyle;
-            ctx.fillRect( this.rect.left, this.rect.top, this.rect.width, this.rect.height );
+            ctx.fill();
         }
         // Stroke
         if( this.strokeStyle ){
             ctx.strokeStyle = this.strokeStyle;
-            ctx.strokeRect( this.rect.left, this.rect.top, this.rect.width, this.rect.height );
+            ctx.stroke();
         }
+
+        ctx.restore();
     }
 }

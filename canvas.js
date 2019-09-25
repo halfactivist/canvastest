@@ -2,6 +2,7 @@
 
 import {Point,Rect} from './coreTypes.js'
 import Drawable from './drawable.js'
+import Ellipse from './ellipseDrawable.js'
 import CanvasDrawableManager from './canvasDrawableManager.js'
 
 var canvas = null;
@@ -48,7 +49,7 @@ export function createObjects(){
                                  rectWidth,
                                  rectHeight );
 
-            var aDrawable = new Drawable( rect );
+            var aDrawable = new Ellipse( rect );
 
             
             var blue = Math.floor(col * (255 / (columns - 1)));
