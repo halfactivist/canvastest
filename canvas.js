@@ -1,5 +1,7 @@
 'use strict';
 
+import './canvasDrawableManager.js'
+
 var canvas = null;
 
 var drawables = [];

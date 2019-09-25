@@ -1,6 +1,6 @@
 'use strict';
 
-class Point {
+export class Point {
 
     /**
      * Dedicated initializer for Point
@@ -57,7 +57,7 @@ class Point {
     }
 }
 
-class Rect {
+export class Rect {
     /**
      * Dedicated initializer for Rect
      * @param {Number} top
