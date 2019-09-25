@@ -1,9 +1,9 @@
 'use strict';
 
 import {Point, Rect} from './coreTypes.js'
-import './canvasDrawableManager.js'
+import CanvasDrawableManager from './canvasDrawableManager.js'
 
-export class Drawable {
+export default class Drawable {
     /**
      * 
      * @param {Rect} rect 

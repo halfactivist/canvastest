@@ -4,26 +4,32 @@
         <title>Hello, Canvas</title>
         <style>
             #canvas {
-                border: 1px dotted black
+                border: 1px dotted gray
             }
         </style>
-        <script type="module" src="./canvas.js"></script>
+        <script type="module">
+            import * as Canvas from './canvas.js'
+            window.addEventListener( 'DOMContentLoaded', (event) => { Canvas.init();} );
+
+            window.Canvas = Canvas;
+
+        </script>
         <!--
         <script src="./coreTypes.js"></script>
         <script src="./drawable.js"></script>
         <script src="./canvasDrawableManager.js"></script>
         -->
     </head>
-    <body onload="init();" style="background-color: #000000">
-        <button type='button' onclick='redraw();'>Redraw</button>
-        <button type='button' onclick='createObjects();'>Create Objects</button>
-        <button type='button' onclick='clearObjects();'>Clear Objects</button>
-        <button type='button' onclick='toggleWiggle();'>Wiggle</button>
-        <button type='button' onclick='toggleFollowMouse();'>Follow Mouse</button>
-        <button type='button' onclick='sendToBack();'>Send to back</button>
-        <button type='button' onclick='bringToFront();'>Bring to front</button>
-        <button type='button' onclick='randomColors();'>Random colors</button>
-        <button type='button' onclick='randomInset();'>Random inset</button>
+    <body onload="" style="background-color: #000000">
+        <button type='button' onclick='Canvas.redraw();'>Redraw</button>
+        <button type='button' onclick='Canvas.createObjects();'>Create Objects</button>
+        <button type='button' onclick='Canvas.clearObjects();'>Clear Objects</button>
+        <button type='button' onclick='Canvas.toggleWiggle();'>Wiggle</button>
+        <button type='button' onclick='Canvas.toggleFollowMouse();'>Follow Mouse</button>
+        <button type='button' onclick='Canvas.sendToBack();'>Send to back</button>
+        <button type='button' onclick='Canvas.bringToFront();'>Bring to front</button>
+        <button type='button' onclick='Canvas.randomColors();'>Random colors</button>
+        <button type='button' onclick='Canvas.randomInset();'>Random inset</button>
         <br/>
         <canvas id='canvas' width='1280' height='1024'></canvas>
     </body>

@@ -1,6 +1,8 @@
 'use strict';
 
-import './canvasDrawableManager.js'
+import {Point,Rect} from './coreTypes.js'
+import Drawable from './drawable.js'
+import CanvasDrawableManager from './canvasDrawableManager.js'
 
 var canvas = null;
 
@@ -8,7 +10,7 @@ var drawables = [];
 
 var cdm = null;
 
-function init()
+export function init()
 {
     canvas = document.getElementById('canvas');
     cdm = new CanvasDrawableManager( canvas );
@@ -16,7 +18,7 @@ function init()
     canvas.addEventListener( 'mousedown', onMouseDownHandler, false );
 }
 
-function createObjects(){
+export function createObjects(){
     var width = canvas.width;
     var height = canvas.height;
 
@@ -59,13 +61,13 @@ function createObjects(){
     }
 }
 
-function clearObjects()
+export function clearObjects()
 {
     drawables.forEach( (drawable) => { cdm.removeObject(drawable); } );
     drawables = [];
 }
 
-function redraw()
+export function redraw()
 {
 	var width = cdm.ctx.canvas.width;
     var height = cdm.ctx.canvas.height;
@@ -74,14 +76,14 @@ function redraw()
 }
 
 var wiggleTimerID = null;
-function toggleWiggle()
+export function toggleWiggle()
 {
     if( !wiggleTimerID ){
         wiggleTimerID = setInterval( () => {
             var dX = -2.0 + Math.round( Math.random() * 4.0 );
             var dY = -2.0 + Math.round( Math.random() * 4.0 );
 
-            var idx = drawables.length / 2;
+            var idx = Math.floor(drawables.length / 2);
             var drawable = drawables[idx];
 
 
@@ -96,7 +98,7 @@ function toggleWiggle()
 }
 
 var randomColorsTimerID = null;
-function randomColors()
+export function randomColors()
 {
     if( !randomColorsTimerID ){
         randomColorsTimerID = setInterval( () => {
@@ -118,7 +120,7 @@ function randomColors()
 }
 
 var randomInsetTimerID = null;
-function randomInset()
+export function randomInset()
 {
     if( !randomInsetTimerID ){
         randomInsetTimerID = setInterval( () => {
@@ -135,7 +137,7 @@ function randomInset()
 }
 
 var _followMouseState = false;
-function toggleFollowMouse()
+export function toggleFollowMouse()
 {
     if( !_followMouseState ){
         _followMouseState = true;
@@ -175,13 +177,13 @@ function getMousePos(canvas, evt) {
 }
 
 
-function sendToBack(){
+export function sendToBack(){
     var idx = drawables.length / 2;
     var drawable = drawables[idx];
     cdm.sendObjectToBack( drawable );
 }
 
-function bringToFront(){
+export function bringToFront(){
     var idx = drawables.length / 2;
     var drawable = drawables[idx];
     cdm.bringObjectToFront( drawable );
