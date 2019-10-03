@@ -7,6 +7,14 @@ const INTERPOLATION_STEPS = 20;
 export default class BezierInterpolator {
 
     /**
+     * Interpolates a curve
+     * @param {Array<Point>} points 
+     */
+    static interpolate( points ){
+        if()
+    }
+
+    /**
      * Interpolates a quadractic curve
      * @param {Point} p0 Start point
      * @param {Point} p1 Control point
