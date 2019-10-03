@@ -4,11 +4,13 @@ import {Point,Rect} from './coreTypes.js'
 import Drawable from './drawable.js'
 import Ellipse from './ellipseDrawable.js'
 import CanvasDrawableManager from './canvasDrawableManager.js'
+import BezierInterpolator from './bezierInterpolator.js'
 
 var canvas = null;
 
 var drawables = [];
 
+/** @type {CanvasDrawableManager} */
 var cdm = null;
 
 export function init()
@@ -190,6 +192,46 @@ export function bringToFront(){
     cdm.bringObjectToFront( drawable );
 }
 
+export function quadraticCurve()
+{
+    let dX = canvas.width;
+    let dY = canvas.height;
+
+    let p0 = new Point( 10, 10 );
+    let p1 = new Point( Math.random() * dX, Math.random() * dY );
+    let p2 = new Point( 1010, 10 );
+
+    var points = BezierInterpolator.quadratic( p0, p1, p2 );
+
+    /** @type {CanvasRenderingContext2D} */
+    var ctx = cdm.ctx;
+    ctx.clearRect( 0, 0, dX, dY );
+    pieceWiseStroke( ctx, [p0, p1, p2], 'rgb(255,0,0)' );
+    pieceWiseStroke( ctx, points, 'rgb(0,255,0)' );
+
+}
+
+export function cubicCurve()
+{
+    let p0 = new Point( 10, 350 );
+    let p3 = new Point( 1010, 350 );
+
+    let dX = canvas.width;
+    let dY = canvas.height;
+
+    let p1 = new Point( Math.random() * dX, Math.random() * dY );
+    let p2 = new Point( Math.random() * dX, Math.random() * dY );
+
+    var points = BezierInterpolator.cubic( p0, p1, p2, p3 );
+
+    /** @type {CanvasRenderingContext2D} */
+    var ctx = cdm.ctx;
+    ctx.clearRect( 0, 0, dX, dY );
+    pieceWiseStroke( ctx, [p0, p1, p2, p3], 'rgb(255,0,0)' );
+    pieceWiseStroke( ctx, points, 'rgb(0,255,0)' );
+
+}
+
 /**
  * @ctx: Canvas context
  * @attibutes: Object cotaining the attributes
@@ -199,4 +241,28 @@ function pathLessFillRect( ctx, attributes )
 	var a = attributes;
 	ctx.fillStyle = a.fillStyle;
     ctx.fillRect( a.x, a.y, a.width, a.height );
+}
+
+/**
+ * 
+ * @param {CanvasRenderingContext2D} ctx 
+ * @param {Array<Point>} points 
+ * @param {*} strokeStyle 
+ */
+function pieceWiseStroke( ctx, points, strokeStyle )
+{
+    ctx.save();
+    
+    ctx.beginPath();
+
+    ctx.moveTo( points[0].x, points[0].y );
+    for( var i = 1; i < points.length; i++ ){
+        var p = points[i];
+        ctx.lineTo( p.x, p.y);
+    }
+
+    ctx.strokeStyle = strokeStyle;
+    ctx.stroke();
+
+    ctx.restore();
 }
