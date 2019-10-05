@@ -11,7 +11,14 @@ export default class BezierInterpolator {
      * @param {Array<Point>} points 
      */
     static interpolate( points ){
-        if()
+        if( points.length <= 2 ){
+            return points;
+        }
+        else if( points.length === 3 ){
+            return this.quadratic( points[0], points[1], points[2] );
+        }
+
+        return this.cubic( points[0], points[1], points[2], points[3] );
     }
 
     /**

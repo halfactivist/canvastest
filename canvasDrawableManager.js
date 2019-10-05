@@ -164,7 +164,7 @@ export default class CanvasDrawableManager {
 	 */
 	_redraw( time ){
 
-		console.log( "_redraw(): updateRect = " + this._updateRect );
+		//console.log( "_redraw(): updateRect = " + this._updateRect );
 
 		// Clear animation frame request ID, thereby marking that the update is in progress
 		this._animationFrameReqID = 0;

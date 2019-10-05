@@ -78,7 +78,7 @@ export default class Drawable {
 
         this.startUpdate();
 
-        this.lineWidth = lineWidth;
+        this._lineWidth = lineWidth;
         
         this.commitUpdate();
     }
