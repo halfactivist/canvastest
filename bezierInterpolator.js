@@ -7,6 +7,21 @@ const INTERPOLATION_STEPS = 20;
 export default class BezierInterpolator {
 
     /**
+     * Interpolates a curve
+     * @param {Array<Point>} points 
+     */
+    static interpolate( points ){
+        if( points.length <= 2 ){
+            return points;
+        }
+        else if( points.length === 3 ){
+            return this.quadratic( points[0], points[1], points[2] );
+        }
+
+        return this.cubic( points[0], points[1], points[2], points[3] );
+    }
+
+    /**
      * Interpolates a quadractic curve
      * @param {Point} p0 Start point
      * @param {Point} p1 Control point

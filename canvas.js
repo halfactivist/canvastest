@@ -3,8 +3,11 @@
 import {Point,Rect} from './coreTypes.js'
 import Drawable from './drawable.js'
 import Ellipse from './ellipseDrawable.js'
+import Curve from './curveDrawable.js'
+
 import CanvasDrawableManager from './canvasDrawableManager.js'
 import BezierInterpolator from './bezierInterpolator.js'
+import Interpolator from './interpolator.js'
 
 var canvas = null;
 
@@ -231,6 +234,69 @@ export function cubicCurve()
     pieceWiseStroke( ctx, points, 'rgb(0,255,0)' );
 
 }
+
+/** @type {Curve} */
+let curveDrawable;
+export function addCurveDrawable()
+{
+    let p0 = new Point( 10, 350 );
+    let p3 = new Point( 1010, 350 );
+
+    let dX = canvas.width;
+    let dY = canvas.height;
+
+    let p1 = new Point( Math.random() * dX, Math.random() * dY );
+    let p2 = new Point( Math.random() * dX, Math.random() * dY );
+
+    curveDrawable = new Curve( [p0, p1, p2, p3] );
+    curveDrawable.strokeStyle = `rgb(${Math.round(Math.random() * 255)},${Math.round(Math.random() * 255)},${Math.round(Math.random() * 255)})`;
+    curveDrawable.lineWidth = 4;
+
+    drawables.push( curveDrawable );
+    cdm.addObject( curveDrawable );
+}
+
+let animateCurveObjectTimerID = null;
+let animateCurveObjectStep = 1;
+
+/** @type {Array<Interpolator>} */
+let animateCurveObjectStepInterpolators;
+
+export function animateCurveObject()
+{
+    if( !animateCurveObjectTimerID ){
+
+    
+        animateCurveObjectTimerID = setInterval( () => {
+
+            if( animateCurveObjectStep >= 1 ){
+                animateCurveObjectStep = 0;
+    
+                let dX = canvas.width;
+                let dY = canvas.height;
+    
+                animateCurveObjectStepInterpolators = curveDrawable.points.map(
+                    ( p ) => {
+                        let t = new Point( Math.random() * dX, Math.random() * dY );
+                        console.log( `t = ${JSON.stringify(t)}`);
+                        return Interpolator.LinearPointInterpolator( p, t );
+                    }
+                );
+            }
+
+            animateCurveObjectStep += 0.01;
+            let newPoints = animateCurveObjectStepInterpolators.map(
+                (i) => { return i.valueAt( animateCurveObjectStep ); }
+            );
+            curveDrawable.points = newPoints;
+        }, 20 );
+    }
+    else{
+        clearInterval( animateCurveObjectTimerID );
+        animateCurveObjectTimerID = null;
+    }
+}
+
 
 /**
  * @ctx: Canvas context

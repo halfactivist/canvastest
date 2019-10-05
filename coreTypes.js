@@ -288,5 +288,25 @@ export class Rect {
                          Number.POSITIVE_INFINITY,
                          Number.POSITIVE_INFINITY );
     }
+
+    /**
+     * Returns the axis aligned rect containing the given points 
+     * @param {Array<Point>} points 
+     * @returns {Rect} Bounding rect
+     */
+    static BoundingRect(points)
+    {
+        let minX = 1000000000, maxX = -1000000000;
+        let minY = 1000000000, maxY = -1000000000;
+        for( let i = 0; i < points.length; i++ ){
+            const p = points[i];
+            minX = p.x < minX ? p.x : minX;
+            maxX = p.x > maxX ? p.x : maxX;
+            minY = p.y < minY ? p.y : minY;
+            maxY = p.y > maxY ? p.y : maxY;
+        }
+
+        return new Rect( minX, minY, maxX - minX, maxY - minY );
+    }
 }
 

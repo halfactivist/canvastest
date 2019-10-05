@@ -9,3 +9,8 @@ TODO:
 - rotation property
 - arc object
 - polygon object
+- animator object
+    - target object & property
+    - target value
+    - interpolator functions
+    - duration
