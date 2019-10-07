@@ -279,7 +279,7 @@ export function animateCurveObject()
                     ( p ) => {
                         let t = new Point( Math.random() * dX, Math.random() * dY );
                         console.log( `t = ${JSON.stringify(t)}`);
-                        return Interpolator.LinearPointInterpolator( p, t );
+                        return Interpolator.Linear( p, t );
                     }
                 );
             }
